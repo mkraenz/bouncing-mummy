@@ -1,7 +1,7 @@
 {
-    "name": "myphaser3game",
+    "name": "bounce-mummy-bounce",
     "version": "0.0.1",
-    "description": "MyPhaser3Game - a Phaser 3 game in Typescript",
+    "description": "Bounce mummy bounce! - a Phaser 3 game in Typescript",
     "license": "MIT",
     "scripts": {
         "prebuild": "del-cli build",

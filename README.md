@@ -1,4 +1,4 @@
-# MyPhaser3Game
+# Bounce mummy bounce!
 
 A phaser3 game build in TypeScript
 
