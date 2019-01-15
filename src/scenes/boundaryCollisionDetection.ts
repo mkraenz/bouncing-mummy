@@ -1,4 +1,8 @@
-export class BoundaryCollisionDetection {
+import { IBoundaryCollisionDetection } from "./iBoundaryCollisionDetection";
+import { ISimpleBoundaryCollisionDetection } from "./iSimpleCollisionDetection";
+
+export class BoundaryCollisionDetection
+    implements ISimpleBoundaryCollisionDetection, IBoundaryCollisionDetection {
     private posInNextFrame!: Phaser.Math.Vector2;
 
     constructor(

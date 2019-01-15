@@ -1,7 +1,8 @@
-import { BoundaryCollisionDetection } from "./collision-detection";
+import { IBoundaryCollisionDetection } from "./iBoundaryCollisionDetection";
+import { IReflector } from "./iReflector";
 
-export class Reflector {
-    constructor(private detector: BoundaryCollisionDetection) {}
+export class Reflector implements IReflector {
+    constructor(private detector: IBoundaryCollisionDetection) {}
 
     public getReflected(vec: Phaser.Math.Vector2): Phaser.Math.Vector2 {
         if (this.detector.hitsVertical()) {

@@ -1,17 +1,17 @@
-import { BoundaryCollisionDetection } from "./collision-detection";
-import { Reflector } from "./reflector";
+import { IReflector } from "./iReflector";
+import { ISimpleBoundaryCollisionDetection } from "./iSimpleCollisionDetection";
 
 export class Logic {
     public pos = new Phaser.Math.Vector2(700, 100);
     public readonly SPEED = 3;
     public velocity = this.setInitialVelocity();
-    private collisionDetector!: BoundaryCollisionDetection;
-    private reflector!: Reflector;
+    private collisionDetector!: ISimpleBoundaryCollisionDetection;
+    private reflector!: IReflector;
 
-    public setCollisionDetection(detector: BoundaryCollisionDetection) {
+    public setCollisionDetection(detector: ISimpleBoundaryCollisionDetection) {
         this.collisionDetector = detector;
     }
-    public setReflector(reflector: Reflector) {
+    public setReflector(reflector: IReflector) {
         this.reflector = reflector;
     }
 

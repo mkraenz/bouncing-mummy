@@ -1,5 +1,5 @@
 import { Scene } from "phaser";
-import { BoundaryCollisionDetection } from "./collision-detection";
+import { BoundaryCollisionDetection } from "./boundaryCollisionDetection";
 import { CST } from "./constants";
 import { Logic } from "./logic";
 import { Reflector } from "./reflector";
@@ -31,7 +31,7 @@ export class MainScene extends Scene {
     }
 
     public create(): void {
-        this.add.sprite(0, 0, CST.images.background).setOrigin(0);
+        this.add.image(0, -50, CST.images.background).setOrigin(0);
         this.mummy = this.add
             .sprite(-1000, -1000, CST.images.mummy)
             .setScale(2);
@@ -55,9 +55,8 @@ export class MainScene extends Scene {
             this.game.canvas,
             sprite
         );
-        const reflector = new Reflector(this.collisionDetector);
         this.logic.setCollisionDetection(this.collisionDetector);
-        this.logic.setReflector(reflector);
+        this.logic.setReflector(new Reflector(this.collisionDetector));
         this.previousVelocity = this.logic.velocity;
     }
 
