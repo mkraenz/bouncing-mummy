@@ -7,7 +7,7 @@ import { Reflector } from "./reflector";
 export class MainScene extends Scene {
     private logic!: Logic;
     private collisionDetector!: BoundaryCollisionDetection;
-    private sprite!: Phaser.GameObjects.Sprite;
+    private mummy!: Phaser.GameObjects.Sprite;
     private previousVelocity!: Phaser.Math.Vector2;
 
     constructor() {
@@ -17,6 +17,7 @@ export class MainScene extends Scene {
     }
 
     public preload(): void {
+        this.load.image("background", "/assets/images/sand.jpg");
         this.load.spritesheet(
             CST.images.mummy,
             "./assets/images/metalslug_mummy37x45.png",
@@ -30,9 +31,12 @@ export class MainScene extends Scene {
     }
 
     public create(): void {
-        this.sprite = this.createSprite();
-        this.createLogic(this.sprite);
-        this.sprite.setRotation(this.logic.velocity.angle());
+        this.add.sprite(0, 0, CST.images.background).setOrigin(0);
+        this.mummy = this.add
+            .sprite(-1000, -1000, CST.images.mummy)
+            .setScale(2);
+        this.createLogic(this.mummy);
+        this.mummy.setRotation(this.logic.velocity.angle());
         this.addAnim();
         this.addSound();
     }
@@ -41,10 +45,6 @@ export class MainScene extends Scene {
         this.previousVelocity = this.logic.velocity.clone();
         this.logic.move();
         this.updateGraphics();
-    }
-
-    private createSprite(): Phaser.GameObjects.Sprite {
-        return this.add.sprite(-1000, -1000, CST.images.mummy).setScale(2);
     }
 
     private createLogic(sprite: Phaser.GameObjects.Sprite) {
@@ -62,12 +62,12 @@ export class MainScene extends Scene {
     }
 
     private updateGraphics(): void {
-        this.sprite.setPosition(this.logic.pos.x, this.logic.pos.y);
+        this.mummy.setPosition(this.logic.pos.x, this.logic.pos.y);
         if (this.hitsBoundary()) {
-            this.sprite.setRotation(this.logic.velocity.angle());
+            this.mummy.setRotation(this.logic.velocity.angle());
         }
         if (this.collisionDetector.hitsVertical()) {
-            this.sprite.toggleFlipY();
+            this.mummy.toggleFlipY();
         }
     }
 
@@ -82,8 +82,8 @@ export class MainScene extends Scene {
             key: CST.anims.walk,
             repeat: -1
         });
-        this.sprite.anims.load(CST.anims.walk);
-        this.sprite.anims.play(CST.anims.walk);
+        this.mummy.anims.load(CST.anims.walk);
+        this.mummy.anims.play(CST.anims.walk);
     }
 
     private addSound(): void {

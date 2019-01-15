@@ -3,6 +3,7 @@ export const CST = {
         walk: "walk"
     },
     images: {
+        background: "background",
         mummy: "mummy"
     },
     scenes: {
