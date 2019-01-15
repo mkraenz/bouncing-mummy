@@ -3,10 +3,8 @@ import { Reflector } from "./reflector";
 
 export class Logic {
     public pos = new Phaser.Math.Vector2(700, 100);
-    public readonly SPEED = 1;
-    public velocity = new Phaser.Math.Vector2(1, 1)
-        .normalize()
-        .scale(this.SPEED);
+    public readonly SPEED = 3;
+    public velocity = this.setInitialVelocity();
     private collisionDetector!: BoundaryCollisionDetection;
     private reflector!: Reflector;
 
@@ -23,6 +21,10 @@ export class Logic {
         } else {
             this.moveStraight();
         }
+    }
+
+    private setInitialVelocity() {
+        return new Phaser.Math.Vector2(1, 1).normalize().scale(this.SPEED);
     }
 
     private moveStraightThenReflect() {
