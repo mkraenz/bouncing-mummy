@@ -1,4 +1,5 @@
 import { IBoundaryCollisionDetection } from "./iBoundaryCollisionDetection";
+import { IDimensions } from "./IDimensions";
 import { ISimpleBoundaryCollisionDetection } from "./iSimpleCollisionDetection";
 
 export class BoundaryCollisionDetection
@@ -8,8 +9,8 @@ export class BoundaryCollisionDetection
     constructor(
         private originalPos: Phaser.Math.Vector2,
         private velocity: Phaser.Math.Vector2,
-        private canvas: HTMLCanvasElement,
-        private sprite: Phaser.GameObjects.Sprite
+        private canvas: IDimensions,
+        private halfCollisionBox: IDimensions
     ) {
         this.updatePos();
     }
@@ -35,7 +36,7 @@ export class BoundaryCollisionDetection
         this.updatePos();
         return (
             this.posInNextFrame.x >=
-            this.canvas.width - (this.sprite.width * this.sprite.scaleX) / 2
+            this.canvas.width - this.halfCollisionBox.width
         );
     }
 
@@ -43,24 +44,18 @@ export class BoundaryCollisionDetection
         this.updatePos();
         return (
             this.posInNextFrame.y >=
-            this.canvas.height - (this.sprite.height * this.sprite.scaleY) / 2
+            this.canvas.height - this.halfCollisionBox.height
         );
     }
 
     private hitsTop(): boolean {
         this.updatePos();
-        return (
-            this.posInNextFrame.y <=
-            0 + (this.sprite.height * this.sprite.scaleY) / 2
-        );
+        return this.posInNextFrame.y <= 0 + this.halfCollisionBox.height;
     }
 
     private hitsLeft(): boolean {
         this.updatePos();
-        return (
-            this.posInNextFrame.x <=
-            0 + (this.sprite.width * this.sprite.scaleX) / 2
-        );
+        return this.posInNextFrame.x <= 0 + this.halfCollisionBox.width;
     }
 
     private updatePos() {
