@@ -1,10 +1,12 @@
 import { Scene } from "phaser";
 import { BoundaryCollisionDetection } from "./boundaryCollisionDetection";
 import { CST } from "./constants";
+import { Controls } from "./controls";
 import { Logic } from "./logic";
 import { Reflector } from "./reflector";
 
 export class MainScene extends Scene {
+    private controls!: Controls;
     private logic!: Logic;
     private collisionDetector!: BoundaryCollisionDetection;
     private mummy!: Phaser.GameObjects.Sprite;
@@ -17,7 +19,7 @@ export class MainScene extends Scene {
     }
 
     public preload(): void {
-        this.load.image("background", "/assets/images/sand.jpg");
+        this.load.image(CST.images.background, "/assets/images/sand.jpg");
         this.load.spritesheet(
             CST.images.mummy,
             "./assets/images/metalslug_mummy37x45.png",
@@ -39,10 +41,12 @@ export class MainScene extends Scene {
         this.mummy.setRotation(this.logic.velocity.angle());
         this.addAnim();
         this.addSound();
+        this.controls = new Controls(this.logic, this.input);
     }
 
     public update(): void {
         this.previousVelocity = this.logic.velocity.clone();
+        this.controls.update();
         this.logic.move();
         this.updateGraphics();
     }

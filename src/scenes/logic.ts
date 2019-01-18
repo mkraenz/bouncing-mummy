@@ -1,7 +1,9 @@
+import { IMovable } from "./IMovable";
 import { IReflector } from "./iReflector";
 import { ISimpleBoundaryCollisionDetection } from "./iSimpleCollisionDetection";
+import { getLeftUnitNormal, getRightUnitNormal } from "./vector-transformation";
 
-export class Logic {
+export class Logic implements IMovable {
     public pos = new Phaser.Math.Vector2(700, 100);
     public readonly SPEED = 3;
     public velocity = this.setInitialVelocity();
@@ -21,6 +23,26 @@ export class Logic {
         } else {
             this.moveStraight();
         }
+    }
+
+    public moveLeft() {
+        this.moveInDir(getLeftUnitNormal);
+    }
+
+    public moveRight() {
+        this.moveInDir(getRightUnitNormal);
+    }
+
+    private moveInDir(
+        getNormal: (vec: Phaser.Math.Vector2) => Phaser.Math.Vector2
+    ): void {
+        const slightlyInNormalDir = getNormal(this.velocity).scale(
+            this.SPEED * 0.01
+        );
+        this.velocity = this.velocity
+            .add(slightlyInNormalDir)
+            .normalize()
+            .scale(this.SPEED);
     }
 
     private setInitialVelocity() {
