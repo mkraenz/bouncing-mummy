@@ -20,6 +20,7 @@ export class MainScene extends Scene {
 
     public preload(): void {
         this.load.image(CST.images.background, "/assets/images/sand.jpg");
+        this.load.image(CST.images.cactus, "/assets/images/cactus.png");
         this.load.spritesheet(
             CST.images.mummy,
             "./assets/images/metalslug_mummy37x45.png",
@@ -34,6 +35,7 @@ export class MainScene extends Scene {
 
     public create(): void {
         this.add.image(0, -50, CST.images.background).setOrigin(0);
+        this.add.sprite(100, 100, CST.images.cactus).setScale(0.3);
         this.mummy = this.add
             .sprite(-1000, -1000, CST.images.mummy)
             .setScale(2);

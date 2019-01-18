@@ -3,10 +3,12 @@ import { IReflector } from "./iReflector";
 import { ISimpleBoundaryCollisionDetection } from "./iSimpleCollisionDetection";
 import { getLeftUnitNormal, getRightUnitNormal } from "./vector-transformation";
 
+const SPEED = 3;
+const DRAG = 0.03;
+
 export class Logic implements IMovable {
     public pos = new Phaser.Math.Vector2(700, 100);
-    public readonly SPEED = 3;
-    public velocity = this.setInitialVelocity();
+    public velocity = this.getInitialVelocity(1, 0);
     private collisionDetector!: ISimpleBoundaryCollisionDetection;
     private reflector!: IReflector;
 
@@ -36,17 +38,15 @@ export class Logic implements IMovable {
     private moveInDir(
         getNormal: (vec: Phaser.Math.Vector2) => Phaser.Math.Vector2
     ): void {
-        const slightlyInNormalDir = getNormal(this.velocity).scale(
-            this.SPEED * 0.01
-        );
+        const slightlyInNormalDir = getNormal(this.velocity).scale(DRAG);
         this.velocity = this.velocity
             .add(slightlyInNormalDir)
             .normalize()
-            .scale(this.SPEED);
+            .scale(SPEED);
     }
 
-    private setInitialVelocity() {
-        return new Phaser.Math.Vector2(1, 1).normalize().scale(this.SPEED);
+    private getInitialVelocity(x: number, y: number) {
+        return new Phaser.Math.Vector2(x, y).normalize().scale(SPEED);
     }
 
     private moveStraightThenReflect() {

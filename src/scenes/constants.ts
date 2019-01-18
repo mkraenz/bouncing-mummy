@@ -4,6 +4,7 @@ export const CST = {
     },
     images: {
         background: "background",
+        cactus: "cactus",
         mummy: "mummy"
     },
     player: {
